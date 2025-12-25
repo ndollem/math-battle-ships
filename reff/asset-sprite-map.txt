@@ -1,0 +1,30 @@
+Asset Category,Asset Name,X-Coordinate (px),Y-Coordinate (px),Width (px),Height (px)
+Kapal,player-normal (Red Ship),0,0,250,170
+,player-normal (Blue Ship),260,0,250,170
+,AI (Green Sub),520,0,250,170
+,AI Ship (Purple Sub),780,0,250,170
+Serangan,Cannon Ball (Large),0,190,100,100
+,Explosion (Small),110,190,100,100
+,Torpedo (Unexploded),220,190,200,100
+,Cannon Ball (Medium),0,300,100,100
+,Torpedo (Exploded),430,190,200,100
+,Explosion (Frame 1),640,190,100,100
+,Explosion (Frame 2),750,190,100,100
+,Explosion (Frame 3),860,190,100,100
+,Water Splash,970,190,100,100
+Tombol Utama,MAIN,0,440,140,60
+,MODE AI,150,440,160,60
+,VS TEMAN,320,440,180,60
+Level/Badge,Level 1-6 (Blue Circles),150,540,60 per item,60
+,Level 5 (Orange),480,540,60,60
+,"*Sample Badges (1xx, x","+, x","-, etc.)*",510,440
+UI & Feedback,QUESTION BOX,0,600,450,300
+,Stopwatch (Large),480,600,80,80
+,Input Field,570,600,200,40
+,MENANG! Ribbon,790,700,280,100
+,KALAH! Ribbon,790,810,280,100
+,Star Icon,790,600,80,80
+,Broken Heart,880,600,80,80
+,Correct/Checkmark,880,910,60,60
+,Incorrect/X Mark,960,910,60,60
+,Water Droplet,790,910,60,60

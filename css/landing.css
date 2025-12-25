@@ -1,0 +1,365 @@
+/* ============================================
+   LANDING PAGE STYLES - Perang Kapal Angka
+   Styles specific to index.html
+   ============================================ */
+
+/* === LANDING PAGE LAYOUT === */
+.landing-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    position: relative;
+}
+
+.landing-content {
+    width: 100%;
+    max-width: 900px;
+    padding: var(--spacing-xl);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+.landing-content.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* === GAME TITLE === */
+.game-title {
+    margin-bottom: var(--spacing-xxl);
+    position: relative;
+    z-index: 10;
+}
+
+.main-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: var(--white);
+    text-shadow: 
+        3px 3px 6px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(96, 165, 250, 0.5);
+    margin-bottom: var(--spacing-md);
+    letter-spacing: 2px;
+}
+
+.subtitle {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: var(--sky-blue);
+    font-weight: 400;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 0;
+}
+
+/* === HEADER BANNER === */
+.header-banner {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto var(--spacing-xl) auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.header-image {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+    animation: header-float 3s ease-in-out infinite;
+}
+
+@keyframes header-float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .header-banner {
+        max-width: 90%;
+    }
+    
+    .header-image {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-banner {
+        max-width: 95%;
+        margin-bottom: var(--spacing-lg);
+    }
+}
+
+/* === MENU BUTTONS === */
+.menu-buttons {
+    margin-bottom: var(--spacing-xxl);
+}
+
+.menu-buttons .btn-main {
+    height: auto;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all var(--transition-medium);
+    border: 4px solid transparent;
+}
+
+.menu-buttons .btn-single-player {
+    background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-buttons .btn-single-player::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: rotate-gradient 10s linear infinite;
+}
+
+.menu-buttons .btn-pvp {
+    background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-buttons .btn-pvp::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: rotate-gradient 10s linear infinite;
+    animation-delay: 5s;
+}
+
+@keyframes rotate-gradient {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.menu-buttons .btn-main:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.menu-buttons .btn-main:active,
+.menu-buttons .btn-main.btn-clicked {
+    transform: translateY(2px) scale(0.98);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.menu-buttons .btn-icon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-md);
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+    animation: icon-bounce 2s ease-in-out infinite;
+}
+
+@keyframes icon-bounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-5px) scale(1.1); }
+}
+
+.menu-buttons .btn-text {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    margin-bottom: var(--spacing-sm);
+    position: relative;
+    z-index: 1;
+}
+
+.menu-buttons .btn-subtitle {
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+    opacity: 0.9;
+    position: relative;
+    z-index: 1;
+}
+
+/* === GAME INFO === */
+.game-info {
+    position: relative;
+    z-index: 10;
+}
+
+.info-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: var(--spacing-lg);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.info-card p {
+    margin-bottom: var(--spacing-sm);
+    color: var(--white);
+}
+
+.info-card strong {
+    color: var(--warning-yellow);
+    font-weight: 700;
+}
+
+.small-text {
+    font-size: var(--font-size-small);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* === FOOTER === */
+.landing-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: var(--spacing-md);
+    text-align: center;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 5;
+}
+
+.landing-footer p {
+    margin: 0;
+    font-size: var(--font-size-small);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 992px) {
+    .ships-decoration {
+        height: 120px;
+    }
+    
+    .ship-left,
+    .ship-right {
+        width: 120px;
+        height: 82px;
+        background-size: 480px 288px;
+    }
+    
+    .ship-right {
+        background-position: -125px 0px;
+    }
+}
+
+@media (max-width: 768px) {
+    .landing-content {
+        padding: var(--spacing-md);
+    }
+    
+    .ships-decoration {
+        height: 100px;
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .ship-left,
+    .ship-right {
+        width: 100px;
+        height: 68px;
+        background-size: 400px 240px;
+    }
+    
+    .ship-right {
+        background-position: -104px 0px;
+    }
+    
+    .menu-buttons .btn-main {
+        min-height: 150px;
+    }
+    
+    .menu-buttons .btn-icon {
+        font-size: 3rem;
+    }
+    
+    .info-card {
+        padding: var(--spacing-md);
+    }
+}
+
+@media (max-width: 576px) {
+    .game-title {
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .ships-decoration {
+        height: 80px;
+    }
+    
+    .ship-left,
+    .ship-right {
+        width: 75px;
+        height: 51px;
+        background-size: 300px 180px;
+    }
+    
+    .ship-right {
+        background-position: -78px 0px;
+    }
+    
+    .menu-buttons .btn-main {
+        min-height: 130px;
+        padding: var(--spacing-md);
+    }
+    
+    .menu-buttons .btn-icon {
+        font-size: 2.5rem;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .landing-footer {
+        position: relative;
+        margin-top: var(--spacing-xl);
+    }
+}
+
+/* === ACCESSIBILITY === */
+@media (prefers-reduced-motion: reduce) {
+    .animate-bounce,
+    .ship-left,
+    .ship-right,
+    .wave,
+    .menu-buttons .btn-icon,
+    .btn-main::before {
+        animation: none !important;
+    }
+    
+    .landing-content {
+        transition: opacity 0.3s ease-out;
+    }
+}
+
+/* === TOUCH DEVICES === */
+@media (hover: none) and (pointer: coarse) {
+    .menu-buttons .btn-main:hover {
+        transform: none;
+    }
+    
+    .menu-buttons .btn-main:active {
+        transform: scale(0.95);
+    }
+}

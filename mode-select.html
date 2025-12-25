@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilih Level - Perang Kapal Angka</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/mode-select.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="mode-select-page">
+    <!-- Background Ocean Animation -->
+    <div class="ocean-background">
+        <div class="wave wave1"></div>
+        <div class="wave wave2"></div>
+        <div class="wave wave3"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="mode-select-content">
+            
+            <!-- Header with Back Button -->
+            <div class="page-header">
+                <button class="btn-back" onclick="goBack()">
+                    ← Kembali
+                </button>
+                <h1 class="page-title" id="modeTitle">Pilih Level</h1>
+                <p class="page-subtitle" id="modeSubtitle">Sesuaikan dengan kelasmu</p>
+            </div>
+
+            <!-- Difficulty Selection (for Single Player only) -->
+            <div class="difficulty-section" id="difficultySection" style="display: none;">
+                <h3 class="section-title">Pilih Tingkat Kesulitan AI:</h3>
+                <div class="difficulty-buttons">
+                    <button class="btn-difficulty" data-difficulty="easy" onclick="selectDifficulty('easy')">
+                        <span class="difficulty-emoji">😊</span>
+                        <span class="difficulty-name">Mudah</span>
+                        <span class="difficulty-desc">AI lambat & sering salah</span>
+                    </button>
+                    <button class="btn-difficulty" data-difficulty="medium" onclick="selectDifficulty('medium')">
+                        <span class="difficulty-emoji">😐</span>
+                        <span class="difficulty-name">Normal</span>
+                        <span class="difficulty-desc">AI kecepatan sedang</span>
+                    </button>
+                    <button class="btn-difficulty" data-difficulty="hard" onclick="selectDifficulty('hard')">
+                        <span class="difficulty-emoji">😤</span>
+                        <span class="difficulty-name">Sulit</span>
+                        <span class="difficulty-desc">AI cepat & akurat</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Level Selection Grid -->
+            <div class="level-selection">
+                <h3 class="section-title">Pilih Kelas SD:</h3>
+                <div class="level-grid">
+                    
+                    <!-- SD Level 1 -->
+                    <div class="level-card" data-level="1" onclick="selectLevel(1)">
+                        <div class="level-badge">
+                            <span class="level-number">1</span>
+                        </div>
+                        <h4 class="level-title">Kelas 1</h4>
+                        <p class="level-range">Perkalian 1-5</p>
+                        <div class="level-examples">
+                            <span class="example">2 × 3</span>
+                            <span class="example">4 × 5</span>
+                        </div>
+                    </div>
+
+                    <!-- SD Level 2 -->
+                    <div class="level-card" data-level="2" onclick="selectLevel(2)">
+                        <div class="level-badge">
+                            <span class="level-number">2</span>
+                        </div>
+                        <h4 class="level-title">Kelas 2</h4>
+                        <p class="level-range">Perkalian 1-5</p>
+                        <div class="level-examples">
+                            <span class="example">3 × 5</span>
+                            <span class="example">5 × 5</span>
+                        </div>
+                    </div>
+
+                    <!-- SD Level 3 -->
+                    <div class="level-card" data-level="3" onclick="selectLevel(3)">
+                        <div class="level-badge">
+                            <span class="level-number">3</span>
+                        </div>
+                        <h4 class="level-title">Kelas 3</h4>
+                        <p class="level-range">Perkalian 1-10</p>
+                        <div class="level-examples">
+                            <span class="example">6 × 7</span>
+                            <span class="example">8 × 9</span>
+                        </div>
+                    </div>
+
+                    <!-- SD Level 4 -->
+                    <div class="level-card" data-level="4" onclick="selectLevel(4)">
+                        <div class="level-badge">
+                            <span class="level-number">4</span>
+                        </div>
+                        <h4 class="level-title">Kelas 4</h4>
+                        <p class="level-range">Perkalian 1-10</p>
+                        <div class="level-examples">
+                            <span class="example">7 × 8</span>
+                            <span class="example">9 × 10</span>
+                        </div>
+                    </div>
+
+                    <!-- SD Level 5 -->
+                    <div class="level-card" data-level="5" onclick="selectLevel(5)">
+                        <div class="level-badge">
+                            <span class="level-number">5</span>
+                        </div>
+                        <h4 class="level-title">Kelas 5</h4>
+                        <p class="level-range">Perkalian 1-12</p>
+                        <div class="level-examples">
+                            <span class="example">9 × 11</span>
+                            <span class="example">10 × 12</span>
+                        </div>
+                    </div>
+
+                    <!-- SD Level 6 -->
+                    <div class="level-card" data-level="6" onclick="selectLevel(6)">
+                        <div class="level-badge">
+                            <span class="level-number">6</span>
+                        </div>
+                        <h4 class="level-title">Kelas 6</h4>
+                        <p class="level-range">Perkalian 1-12</p>
+                        <div class="level-examples">
+                            <span class="example">11 × 12</span>
+                            <span class="example">12 × 12</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Start Game Button -->
+            <div class="start-section">
+                <button class="btn-start" id="btnStart" onclick="startGame()" disabled>
+                    <span class="btn-start-icon">🚀</span>
+                    <span class="btn-start-text">Mulai Permainan!</span>
+                </button>
+                <p class="selection-info" id="selectionInfo">
+                    Pilih level untuk mulai bermain
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+    
+    <script>
+        // Page state
+        let selectedMode = null;
+        let selectedLevel = null;
+        let selectedDifficulty = 'medium'; // Default difficulty
+
+        // Initialize page
+        window.addEventListener('DOMContentLoaded', function() {
+            // Get mode from URL
+            selectedMode = URLHelper.getParam('mode');
+            
+            if (!selectedMode || !Validator.isValidMode(selectedMode)) {
+                // Invalid mode, redirect back
+                alert('Mode tidak valid!');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Update page title based on mode
+            updatePageTitle();
+            
+            // Show difficulty selection for single player
+            if (selectedMode === 'single') {
+                document.getElementById('difficultySection').style.display = 'block';
+                // Select medium difficulty by default
+                selectDifficulty('medium');
+            }
+
+            // Add entrance animation
+            setTimeout(() => {
+                document.querySelector('.mode-select-content').classList.add('fade-in');
+            }, 100);
+        });
+
+        // Update page title based on mode
+        function updatePageTitle() {
+            const titleElement = document.getElementById('modeTitle');
+            const subtitleElement = document.getElementById('modeSubtitle');
+            
+            if (selectedMode === 'single') {
+                titleElement.textContent = '🎮 Mode Single Player';
+                subtitleElement.textContent = 'Lawan komputer dan tingkatkan kemampuanmu!';
+            } else if (selectedMode === 'pvp') {
+                titleElement.textContent = '⚔️ Mode Player vs Player';
+                subtitleElement.textContent = 'Adu cepat dengan temanmu!';
+            }
+        }
+
+        // Select difficulty
+        function selectDifficulty(difficulty) {
+            selectedDifficulty = difficulty;
+            
+            // Update UI
+            document.querySelectorAll('.btn-difficulty').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            document.querySelector(`[data-difficulty="${difficulty}"]`).classList.add('selected');
+            
+            updateSelectionInfo();
+        }
+
+        // Select level
+        function selectLevel(level) {
+            selectedLevel = level;
+            
+            // Update UI
+            document.querySelectorAll('.level-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            document.querySelector(`[data-level="${level}"]`).classList.add('selected');
+            
+            // Enable start button
+            document.getElementById('btnStart').disabled = false;
+            
+            // Update selection info
+            updateSelectionInfo();
+            
+            // Pulse animation on start button
+            AnimationHelper.pulse(document.getElementById('btnStart'));
+        }
+
+        // Update selection info text
+        function updateSelectionInfo() {
+            const infoElement = document.getElementById('selectionInfo');
+            
+            if (selectedLevel) {
+                let text = `Level dipilih: Kelas ${selectedLevel}`;
+                if (selectedMode === 'single') {
+                    const difficultyNames = {
+                        'easy': 'Mudah',
+                        'medium': 'Normal',
+                        'hard': 'Sulit'
+                    };
+                    text += ` | Kesulitan: ${difficultyNames[selectedDifficulty]}`;
+                }
+                infoElement.textContent = text;
+                infoElement.style.color = '#22c55e';
+            } else {
+                infoElement.textContent = 'Pilih level untuk mulai bermain';
+                infoElement.style.color = '#f3f4f6';
+            }
+        }
+
+        // Start game
+        function startGame() {
+            if (!selectedLevel) {
+                alert('Pilih level terlebih dahulu!');
+                return;
+            }
+
+            // Save settings
+            StorageManager.saveSettings({
+                mode: selectedMode,
+                level: selectedLevel,
+                difficulty: selectedDifficulty
+            });
+
+            // Navigate to game page with parameters
+            const params = {
+                mode: selectedMode,
+                level: selectedLevel
+            };
+            
+            if (selectedMode === 'single') {
+                params.difficulty = selectedDifficulty;
+            }
+
+            URLHelper.navigate('game.html', params);
+        }
+
+        // Go back to landing page
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

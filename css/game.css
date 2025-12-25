@@ -1,0 +1,738 @@
+/* ============================================
+   GAME PAGE STYLES - Perang Kapal Angka
+   Styles specific to game.html
+   ============================================ */
+
+/* === GAME PAGE LAYOUT === */
+.game-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.game-container {
+    width: 100%;
+    max-width: 1400px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+}
+
+/* === QUESTION SECTION === */
+.question-section {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    padding: var(--spacing-lg);
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    position: relative;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.timer-container {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    background: rgba(0, 0, 0, 0.3);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 50px;
+}
+
+.timer-icon {
+    font-size: 1.5rem;
+}
+
+.timer-display {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--white);
+    min-width: 40px;
+    text-align: center;
+}
+
+.timer-display.warning {
+    color: var(--warning-yellow);
+    animation: pulse 0.5s ease-in-out infinite;
+}
+
+.timer-display.danger {
+    color: var(--error-red);
+    animation: pulse 0.3s ease-in-out infinite;
+}
+
+.question-text {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: var(--white);
+    margin: 0;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6);
+    letter-spacing: 3px;
+}
+
+.feedback-message {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    margin-top: var(--spacing-sm);
+    min-height: 30px;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.feedback-message.show {
+    opacity: 1;
+}
+
+.feedback-message.correct {
+    color: var(--success-green);
+    text-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+}
+
+.feedback-message.wrong {
+    color: var(--error-red);
+    text-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
+}
+
+/* === BATTLE AREA === */
+.battle-area {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-xl) var(--spacing-lg);
+    position: relative;
+    margin-bottom: var(--spacing-lg);
+    min-height: 300px;
+}
+
+.ship-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+    position: relative;
+    z-index: 10;
+}
+
+.player-label {
+    font-size: var(--font-size-large);
+    font-weight: 700;
+    color: var(--white);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.3);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: 12px;
+}
+
+/* === SHIP SPRITES WITH INDIVIDUAL IMAGES === */
+.ship-sprite {
+    width: 200px;
+    height: 110px;
+    transition: transform var(--transition-fast), filter var(--transition-fast);
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5));
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+/* Player ship animations (attacking right) */
+.player-ship .ship-sprite.attacking {
+    animation: ship-attack-right 0.5s ease-out;
+}
+
+/* Enemy ship animations (attacking left) */
+.enemy-ship .ship-sprite.attacking {
+    animation: ship-attack-left 0.5s ease-out;
+}
+
+@keyframes ship-attack-right {
+    0%, 100% { 
+        transform: translateX(0);
+    }
+    50% { 
+        transform: translateX(30px) scale(1.1);
+    }
+}
+
+@keyframes ship-attack-left {
+    0%, 100% { 
+        transform: translateX(0);
+    }
+    50% { 
+        transform: translateX(-30px) scale(1.1);
+    }
+}
+
+/* Fix for flipped ships (when player uses left-facing ship or enemy uses right-facing) */
+.player-ship .sprite-ai-green.attacking,
+.player-ship .sprite-ai-purple.attacking {
+    animation: ship-attack-right-flipped 0.5s ease-out;
+}
+
+.enemy-ship .sprite-player-red.attacking,
+.enemy-ship .sprite-player-blue.attacking {
+    animation: ship-attack-left-flipped 0.5s ease-out;
+}
+
+@keyframes ship-attack-right-flipped {
+    0%, 100% { 
+        transform: scaleX(-1) translateX(0);
+    }
+    50% { 
+        transform: scaleX(-1) translateX(-30px) scale(1.1);
+    }
+}
+
+@keyframes ship-attack-left-flipped {
+    0%, 100% { 
+        transform: scaleX(-1) translateX(0);
+    }
+    50% { 
+        transform: scaleX(-1) translateX(30px) scale(1.1);
+    }
+}
+
+/* Ship hit animations */
+.ship-sprite.hit {
+    animation: ship-hit 0.5s ease-out;
+}
+
+@keyframes ship-hit {
+    0%, 100% { 
+        transform: translateX(0) rotate(0deg);
+        filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5));
+    }
+    25% { 
+        transform: translateX(-10px) rotate(-5deg);
+        filter: drop-shadow(0 8px 16px rgba(255, 0, 0, 0.8));
+    }
+    50% {
+        filter: drop-shadow(0 8px 16px rgba(255, 0, 0, 1));
+    }
+    75% { 
+        transform: translateX(10px) rotate(5deg);
+        filter: drop-shadow(0 8px 16px rgba(255, 0, 0, 0.8));
+    }
+}
+
+/* Hit animation for flipped ships */
+.player-ship .sprite-ai-green.hit,
+.player-ship .sprite-ai-purple.hit,
+.enemy-ship .sprite-player-red.hit,
+.enemy-ship .sprite-player-blue.hit {
+    animation: ship-hit-flipped 0.5s ease-out;
+}
+
+@keyframes ship-hit-flipped {
+    0%, 100% { 
+        transform: scaleX(-1) translateX(0) rotate(0deg);
+        filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5));
+    }
+    25% { 
+        transform: scaleX(-1) translateX(10px) rotate(5deg);
+        filter: drop-shadow(0 8px 16px rgba(255, 0, 0, 0.8));
+    }
+    50% {
+        filter: drop-shadow(0 8px 16px rgba(255, 0, 0, 1));
+    }
+    75% { 
+        transform: scaleX(-1) translateX(-10px) rotate(-5deg);
+        filter: drop-shadow(0 8px 16px rgba(255, 0, 0, 0.8));
+    }
+}
+
+/* === HP BARS === */
+.hp-bar-container {
+    width: 200px;
+}
+
+.hp-bar {
+    width: 100%;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.hp-fill {
+    height: 100%;
+    transition: width 0.5s ease-out;
+    border-radius: 8px;
+    position: relative;
+}
+
+.hp-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent);
+    border-radius: 8px 8px 0 0;
+}
+
+.player-hp {
+    background: linear-gradient(90deg, var(--success-green), #16a34a);
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.6);
+}
+
+.enemy-hp {
+    background: linear-gradient(90deg, var(--error-red), #b91c1c);
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+}
+
+.hp-text {
+    text-align: center;
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    color: var(--white);
+    margin: var(--spacing-xs) 0 0 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* === ANSWER INDICATORS (Using CSS Icons) === */
+.answer-indicator {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    animation: indicator-pop 0.3s ease-out;
+}
+
+.answer-indicator.show {
+    display: flex;
+}
+
+.answer-indicator.correct {
+    background: var(--success-green);
+    color: var(--white);
+}
+
+.answer-indicator.correct::before {
+    content: '✓';
+}
+
+.answer-indicator.wrong {
+    background: var(--error-red);
+    color: var(--white);
+}
+
+.answer-indicator.wrong::before {
+    content: '✗';
+}
+
+@keyframes indicator-pop {
+    0% { 
+        transform: scale(0);
+    }
+    50% { 
+        transform: scale(1.2);
+    }
+    100% { 
+        transform: scale(1);
+    }
+}
+
+/* === VS INDICATOR === */
+.vs-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+}
+
+.vs-text {
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--white);
+    text-shadow: 
+        3px 3px 0 var(--error-red),
+        -3px -3px 0 var(--ocean-blue),
+        0 0 20px rgba(255, 255, 255, 0.5);
+    animation: vs-pulse 2s ease-in-out infinite;
+}
+
+@keyframes vs-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.1); opacity: 1; }
+}
+
+/* === ATTACK CANVAS === */
+.attack-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 8;
+}
+
+/* === CHOICES SECTION === */
+.choices-section {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+}
+
+.single-player-choices {
+    display: none;
+}
+
+.choices-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.choice-btn {
+    position: relative;
+    min-height: 80px;
+    padding: var(--spacing-md);
+    background: linear-gradient(135deg, var(--ocean-light), var(--ocean-blue));
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    color: var(--white);
+    font-family: var(--font-primary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.choice-btn:hover:not(:disabled) {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+.choice-btn:active:not(:disabled) {
+    transform: translateY(2px);
+}
+
+.choice-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.choice-btn.selected {
+    background: linear-gradient(135deg, var(--warning-yellow), #f59e0b);
+    border-color: var(--warning-yellow);
+    transform: scale(1.05);
+}
+
+.choice-btn.correct {
+    background: linear-gradient(135deg, var(--success-green), #16a34a);
+    border-color: var(--success-green);
+    animation: correct-pulse 0.5s ease-out;
+}
+
+.choice-btn.wrong {
+    background: linear-gradient(135deg, var(--error-red), #b91c1c);
+    border-color: var(--error-red);
+    animation: shake 0.5s ease-out;
+}
+
+@keyframes correct-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.answer-number {
+    font-size: 2rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.key-hint {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+/* === PVP CHOICES === */
+.pvp-choices {
+    display: none;
+    justify-content: space-between;
+    gap: var(--spacing-xl);
+}
+
+.player-choices {
+    flex: 1;
+}
+
+.player-choices-label {
+    text-align: center;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: var(--spacing-md);
+    font-size: var(--font-size-base);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.player1-choices .choice-btn {
+    background: linear-gradient(135deg, var(--player-blue), #1e40af);
+}
+
+.player2-choices .choice-btn {
+    background: linear-gradient(135deg, #f97316, #c2410c);
+}
+
+.choices-divider {
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.3), transparent);
+}
+
+/* === GAME INFO BAR === */
+.game-info-bar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: var(--spacing-md);
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.info-label {
+    font-size: var(--font-size-small);
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+}
+
+.info-value {
+    font-size: var(--font-size-large);
+    font-weight: 700;
+    color: var(--white);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.info-value.correct {
+    color: var(--success-green);
+}
+
+.info-value.wrong {
+    color: var(--error-red);
+}
+
+/* === GAME MODAL === */
+.game-modal {
+    background: linear-gradient(135deg, var(--ocean-dark), var(--ocean-blue));
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    color: var(--white);
+}
+
+.game-modal .modal-header {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.game-modal .modal-title {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+}
+
+.game-modal .modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding: var(--spacing-xl);
+}
+
+.btn-modal {
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: linear-gradient(135deg, var(--ocean-light), var(--ocean-blue));
+    border: none;
+    border-radius: 12px;
+    color: var(--white);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-large);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-medium);
+}
+
+.btn-modal:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.btn-modal.btn-secondary {
+    background: linear-gradient(135deg, var(--gray-medium), var(--gray-dark));
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 1200px) {
+    .ship-sprite {
+        width: 160px;
+        height: 88px;
+    }
+    
+    .hp-bar-container {
+        width: 160px;
+    }
+}
+
+@media (max-width: 992px) {
+    .question-text {
+        font-size: 2.5rem;
+    }
+    
+    .vs-text {
+        font-size: 3rem;
+    }
+    
+    .ship-sprite {
+        width: 140px;
+        height: 77px;
+    }
+    
+    .hp-bar-container {
+        width: 140px;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-container {
+        padding: var(--spacing-sm);
+    }
+    
+    .question-section {
+        padding: var(--spacing-md);
+        min-height: 120px;
+    }
+    
+    .timer-container {
+        position: static;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .question-text {
+        font-size: 2rem;
+    }
+    
+    .battle-area {
+        padding: var(--spacing-md);
+        min-height: 250px;
+    }
+    
+    .ship-sprite {
+        width: 120px;
+        height: 66px;
+    }
+    
+    .hp-bar-container {
+        width: 120px;
+    }
+    
+    .vs-text {
+        font-size: 2.5rem;
+    }
+    
+    .pvp-choices {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+    
+    .choices-divider {
+        height: 2px;
+        width: 100%;
+        background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+    }
+    
+    .game-info-bar {
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
+    }
+    
+    .info-item {
+        flex: 1 1 40%;
+    }
+}
+
+@media (max-width: 576px) {
+    .question-text {
+        font-size: 1.5rem;
+    }
+    
+    .ship-sprite {
+        width: 100px;
+        height: 55px;
+    }
+    
+    .hp-bar-container {
+        width: 100px;
+    }
+    
+    .hp-bar {
+        height: 16px;
+    }
+    
+    .answer-number {
+        font-size: 1.5rem;
+    }
+    
+    .choice-btn {
+        min-height: 60px;
+    }
+    
+    .choices-grid {
+        gap: var(--spacing-sm);
+    }
+}
+
+/* === ACCESSIBILITY === */
+@media (prefers-reduced-motion: reduce) {
+    .ship-sprite,
+    .timer-display,
+    .vs-text,
+    .choice-btn,
+    .answer-indicator {
+        animation: none !important;
+    }
+}

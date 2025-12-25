@@ -1,0 +1,488 @@
+/* ============================================
+   MODE SELECT PAGE STYLES - Perang Kapal Angka
+   Styles specific to mode-select.html
+   ============================================ */
+
+/* === PAGE LAYOUT === */
+.mode-select-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: var(--spacing-lg) 0;
+}
+
+.mode-select-content {
+    width: 100%;
+    max-width: 1000px;
+    padding: var(--spacing-xl);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+.mode-select-content.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* === PAGE HEADER === */
+.page-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xxl);
+    position: relative;
+}
+
+.btn-back {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    color: var(--white);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-medium);
+}
+
+.btn-back:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateX(-5px);
+}
+
+.btn-back:active {
+    transform: translateX(0);
+}
+
+.page-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    color: var(--white);
+    margin-bottom: var(--spacing-sm);
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.page-subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--sky-blue);
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* === SECTION TITLES === */
+.section-title {
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    color: var(--white);
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* === DIFFICULTY SECTION === */
+.difficulty-section {
+    margin-bottom: var(--spacing-xxl);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: var(--spacing-xl);
+}
+
+.difficulty-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.btn-difficulty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    color: var(--white);
+    cursor: pointer;
+    transition: all var(--transition-medium);
+    min-height: 140px;
+}
+
+.btn-difficulty:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.btn-difficulty.selected {
+    background: linear-gradient(135deg, var(--success-green), #16a34a);
+    border-color: var(--success-green);
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(34, 197, 94, 0.4);
+}
+
+.difficulty-emoji {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.difficulty-name {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    margin-bottom: var(--spacing-xs);
+}
+
+.difficulty-desc {
+    font-size: var(--font-size-small);
+    opacity: 0.9;
+    text-align: center;
+}
+
+/* === LEVEL SELECTION === */
+.level-selection {
+    margin-bottom: var(--spacing-xxl);
+}
+
+.level-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.level-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: var(--spacing-lg);
+    cursor: pointer;
+    transition: all var(--transition-medium);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.level-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity var(--transition-medium);
+}
+
+.level-card:hover::before {
+    opacity: 1;
+}
+
+.level-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+.level-card.selected {
+    background: linear-gradient(135deg, var(--ocean-light), var(--ocean-blue));
+    border-color: var(--sky-blue);
+    transform: scale(1.05);
+    box-shadow: 0 12px 28px rgba(59, 130, 246, 0.5);
+}
+
+.level-card.selected::before {
+    opacity: 0;
+}
+
+.level-badge {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--spacing-md);
+    background: linear-gradient(135deg, var(--sky-blue), var(--ocean-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 1;
+}
+
+.level-card.selected .level-badge {
+    background: linear-gradient(135deg, var(--warning-yellow), #f59e0b);
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.level-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--white);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.level-title {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: var(--spacing-sm);
+    position: relative;
+    z-index: 1;
+}
+
+.level-range {
+    font-size: var(--font-size-base);
+    color: var(--sky-blue);
+    margin-bottom: var(--spacing-md);
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+}
+
+.level-card.selected .level-range {
+    color: var(--warning-yellow);
+}
+
+.level-examples {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    position: relative;
+    z-index: 1;
+}
+
+.example {
+    background: rgba(0, 0, 0, 0.3);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 8px;
+    font-size: var(--font-size-small);
+    color: var(--white);
+    font-weight: 600;
+}
+
+/* === START SECTION === */
+.start-section {
+    text-align: center;
+}
+
+.btn-start {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-lg) var(--spacing-xxl);
+    background: linear-gradient(135deg, var(--success-green), #16a34a);
+    border: none;
+    border-radius: 50px;
+    color: var(--white);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition-medium);
+    box-shadow: 0 8px 20px rgba(34, 197, 94, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-start::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-start:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-start:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(34, 197, 94, 0.6);
+}
+
+.btn-start:active {
+    transform: translateY(0);
+}
+
+.btn-start:disabled {
+    background: linear-gradient(135deg, var(--gray-medium), var(--gray-dark));
+    cursor: not-allowed;
+    opacity: 0.5;
+    box-shadow: none;
+}
+
+.btn-start:disabled:hover {
+    transform: none;
+}
+
+.btn-start-icon {
+    font-size: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.btn-start-text {
+    position: relative;
+    z-index: 1;
+}
+
+.selection-info {
+    margin-top: var(--spacing-lg);
+    font-size: var(--font-size-large);
+    color: var(--white);
+    font-weight: 600;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    transition: color var(--transition-medium);
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 992px) {
+    .level-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .mode-select-content {
+        padding: var(--spacing-md);
+    }
+
+    .btn-back {
+        position: static;
+        display: block;
+        width: fit-content;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .page-header {
+        text-align: center;
+    }
+
+    .difficulty-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .level-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-md);
+    }
+
+    .level-badge {
+        width: 60px;
+        height: 60px;
+    }
+
+    .level-number {
+        font-size: 2rem;
+    }
+
+    .btn-start {
+        padding: var(--spacing-md) var(--spacing-xl);
+        font-size: var(--font-size-large);
+    }
+}
+
+@media (max-width: 576px) {
+    .difficulty-section {
+        padding: var(--spacing-md);
+    }
+
+    .btn-difficulty {
+        min-height: 120px;
+        padding: var(--spacing-md);
+    }
+
+    .difficulty-emoji {
+        font-size: 2.5rem;
+    }
+
+    .level-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .level-card {
+        padding: var(--spacing-md);
+    }
+
+    .level-badge {
+        width: 70px;
+        height: 70px;
+    }
+
+    .btn-start {
+        width: 100%;
+        padding: var(--spacing-md) var(--spacing-lg);
+    }
+
+    .btn-start-icon {
+        font-size: 1.5rem;
+    }
+}
+
+/* === ANIMATIONS === */
+@keyframes levelCardPulse {
+    0%, 100% {
+        box-shadow: 0 12px 28px rgba(59, 130, 246, 0.5);
+    }
+    50% {
+        box-shadow: 0 12px 28px rgba(59, 130, 246, 0.8);
+    }
+}
+
+.level-card.selected {
+    animation: levelCardPulse 2s ease-in-out infinite;
+}
+
+/* === ACCESSIBILITY === */
+@media (prefers-reduced-motion: reduce) {
+    .level-card.selected,
+    .level-badge,
+    .btn-start::before {
+        animation: none !important;
+    }
+
+    .mode-select-content,
+    .btn-back,
+    .btn-difficulty,
+    .level-card,
+    .btn-start {
+        transition: opacity 0.3s ease, background 0.3s ease;
+    }
+}
+
+/* === TOUCH DEVICES === */
+@media (hover: none) and (pointer: coarse) {
+    .btn-back:hover,
+    .btn-difficulty:hover,
+    .level-card:hover,
+    .btn-start:hover {
+        transform: none;
+    }
+
+    .btn-back:active {
+        transform: scale(0.95);
+    }
+
+    .btn-difficulty:active,
+    .level-card:active {
+        transform: scale(0.98);
+    }
+
+    .btn-start:active {
+        transform: scale(0.97);
+    }
+}

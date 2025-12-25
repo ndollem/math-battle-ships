@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasil Pertempuran - Perang Kapal Angka</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/result.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="result-page">
+    <!-- Background Ocean Animation -->
+    <div class="ocean-background">
+        <div class="wave wave1"></div>
+        <div class="wave wave2"></div>
+        <div class="wave wave3"></div>
+    </div>
+
+    <!-- Confetti Canvas (for victory) -->
+    <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="result-content">
+            
+            <!-- Result Banner -->
+            <div class="result-banner" id="resultBanner">
+                <div class="banner-icon" id="bannerIcon">🏆</div>
+                <h1 class="banner-title" id="bannerTitle">MENANG!</h1>
+                <p class="banner-subtitle" id="bannerSubtitle">Selamat! Kamu berhasil mengalahkan musuh!</p>
+            </div>
+
+            <!-- Statistics Card -->
+            <div class="stats-card">
+                <h2 class="stats-title">📊 Statistik Pertempuran</h2>
+                
+                <div class="stats-grid">
+                    <!-- Total Questions -->
+                    <div class="stat-item">
+                        <div class="stat-icon">📝</div>
+                        <div class="stat-info">
+                            <p class="stat-label">Total Soal</p>
+                            <p class="stat-value" id="totalQuestions">10</p>
+                        </div>
+                    </div>
+
+                    <!-- Correct Answers -->
+                    <div class="stat-item correct">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-info">
+                            <p class="stat-label">Jawaban Benar</p>
+                            <p class="stat-value" id="correctAnswers">8</p>
+                        </div>
+                    </div>
+
+                    <!-- Wrong Answers -->
+                    <div class="stat-item wrong">
+                        <div class="stat-icon">❌</div>
+                        <div class="stat-info">
+                            <p class="stat-label">Jawaban Salah</p>
+                            <p class="stat-value" id="wrongAnswers">2</p>
+                        </div>
+                    </div>
+
+                    <!-- Accuracy -->
+                    <div class="stat-item accuracy">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-info">
+                            <p class="stat-label">Akurasi</p>
+                            <p class="stat-value" id="accuracy">80%</p>
+                        </div>
+                    </div>
+
+                    <!-- Average Time -->
+                    <div class="stat-item time">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-info">
+                            <p class="stat-label">Rata-rata Waktu</p>
+                            <p class="stat-value" id="avgTime">3.2s</p>
+                        </div>
+                    </div>
+
+                    <!-- Performance Grade -->
+                    <div class="stat-item grade">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-info">
+                            <p class="stat-label">Nilai</p>
+                            <p class="stat-value grade-letter" id="grade">A</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Message -->
+                <div class="performance-message" id="performanceMessage">
+                    <p class="message-text">🎉 Luar biasa! Kamu sangat cepat dan akurat!</p>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn-action btn-primary" onclick="playAgain()">
+                    <span class="btn-icon">🔄</span>
+                    <span class="btn-text">Main Lagi</span>
+                </button>
+                
+                <button class="btn-action btn-secondary" onclick="changeLevel()">
+                    <span class="btn-icon">🎮</span>
+                    <span class="btn-text">Ganti Level</span>
+                </button>
+                
+                <button class="btn-action btn-tertiary" onclick="backToMenu()">
+                    <span class="btn-icon">🏠</span>
+                    <span class="btn-text">Menu Utama</span>
+                </button>
+            </div>
+
+            <!-- Motivational Tips -->
+            <div class="tips-section" id="tipsSection">
+                <h3 class="tips-title">💡 Tips:</h3>
+                <p class="tips-text" id="tipsText">
+                    Terus berlatih untuk meningkatkan kecepatan dan akurasimu!
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+    
+    <script>
+        // Game results
+        let winner = null;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let totalCount = 0;
+        let accuracyPercent = 0;
+        let avgTimeMs = 0;
+
+        // Initialize page
+        window.addEventListener('DOMContentLoaded', function() {
+            // Get results from URL parameters
+            winner = URLHelper.getParam('winner');
+            correctCount = parseInt(URLHelper.getParam('correct')) || 0;
+            wrongCount = parseInt(URLHelper.getParam('wrong')) || 0;
+            totalCount = parseInt(URLHelper.getParam('total')) || 0;
+            accuracyPercent = parseInt(URLHelper.getParam('accuracy')) || 0;
+            avgTimeMs = parseInt(URLHelper.getParam('avgTime')) || 0;
+
+            // Update display
+            updateResultBanner();
+            updateStatistics();
+            updatePerformanceMessage();
+            updateTips();
+
+            // Trigger confetti for victory
+            if (winner === 'player') {
+                triggerConfetti();
+            }
+
+            // Add entrance animation
+            setTimeout(() => {
+                document.querySelector('.result-content').classList.add('fade-in');
+            }, 100);
+        });
+
+        /**
+         * Update result banner based on winner
+         */
+        function updateResultBanner() {
+            const banner = document.getElementById('resultBanner');
+            const icon = document.getElementById('bannerIcon');
+            const title = document.getElementById('bannerTitle');
+            const subtitle = document.getElementById('bannerSubtitle');
+
+            if (winner === 'player') {
+                banner.className = 'result-banner victory';
+                icon.textContent = '🏆';
+                title.textContent = 'MENANG!';
+                subtitle.textContent = 'Selamat! Kamu berhasil mengalahkan musuh!';
+            } else if (winner === 'enemy') {
+                banner.className = 'result-banner defeat';
+                icon.textContent = '😢';
+                title.textContent = 'KALAH!';
+                subtitle.textContent = 'Jangan menyerah! Coba lagi dan jadilah lebih baik!';
+            } else {
+                banner.className = 'result-banner draw';
+                icon.textContent = '🤝';
+                title.textContent = 'SERI!';
+                subtitle.textContent = 'Pertempuran yang seru! Kalian sama-sama hebat!';
+            }
+        }
+
+        /**
+         * Update statistics display
+         */
+        function updateStatistics() {
+            document.getElementById('totalQuestions').textContent = totalCount;
+            document.getElementById('correctAnswers').textContent = correctCount;
+            document.getElementById('wrongAnswers').textContent = wrongCount;
+            document.getElementById('accuracy').textContent = accuracyPercent + '%';
+            
+            // Format average time
+            const avgTimeSec = (avgTimeMs / 1000).toFixed(1);
+            document.getElementById('avgTime').textContent = avgTimeSec + 's';
+
+            // Calculate grade
+            const grade = calculateGrade(accuracyPercent, avgTimeMs);
+            document.getElementById('grade').textContent = grade;
+        }
+
+        /**
+         * Calculate performance grade
+         */
+        function calculateGrade(accuracy, avgTime) {
+            const avgTimeSec = avgTime / 1000;
+
+            // S rank: >90% accuracy and <2.5s avg time
+            if (accuracy >= 90 && avgTimeSec < 2.5) return 'S';
+            
+            // A rank: >80% accuracy and <3.5s avg time
+            if (accuracy >= 80 && avgTimeSec < 3.5) return 'A';
+            
+            // B rank: >70% accuracy and <4.5s avg time
+            if (accuracy >= 70 && avgTimeSec < 4.5) return 'B';
+            
+            // C rank: >60% accuracy
+            if (accuracy >= 60) return 'C';
+            
+            // D rank: >50% accuracy
+            if (accuracy >= 50) return 'D';
+            
+            // F rank: <50% accuracy
+            return 'F';
+        }
+
+        /**
+         * Update performance message
+         */
+        function updatePerformanceMessage() {
+            const messageElement = document.getElementById('performanceMessage');
+            const messageText = messageElement.querySelector('.message-text');
+            
+            const grade = calculateGrade(accuracyPercent, avgTimeMs);
+            let message = '';
+
+            switch(grade) {
+                case 'S':
+                    message = '🌟 SEMPURNA! Kamu adalah master perkalian!';
+                    break;
+                case 'A':
+                    message = '🎉 Luar biasa! Kamu sangat cepat dan akurat!';
+                    break;
+                case 'B':
+                    message = '👍 Bagus sekali! Terus tingkatkan kecepatanmu!';
+                    break;
+                case 'C':
+                    message = '😊 Cukup baik! Latih lagi untuk hasil lebih baik!';
+                    break;
+                case 'D':
+                    message = '💪 Jangan menyerah! Latihan membuat sempurna!';
+                    break;
+                case 'F':
+                    message = '📚 Terus belajar! Kamu pasti bisa lebih baik!';
+                    break;
+            }
+
+            messageText.textContent = message;
+        }
+
+        /**
+         * Update tips based on performance
+         */
+        function updateTips() {
+            const tipsText = document.getElementById('tipsText');
+            let tip = '';
+
+            if (accuracyPercent < 60) {
+                tip = '📖 Tip: Fokus pada akurasi dulu, kecepatan akan mengikuti dengan latihan!';
+            } else if (avgTimeMs > 4000) {
+                tip = '⚡ Tip: Hafalkan tabel perkalian untuk menjawab lebih cepat!';
+            } else if (accuracyPercent >= 90) {
+                tip = '🏆 Tip: Coba level yang lebih sulit untuk tantangan baru!';
+            } else {
+                tip = '💡 Tip: Terus berlatih untuk meningkatkan kecepatan dan akurasimu!';
+            }
+
+            tipsText.textContent = tip;
+        }
+
+        /**
+         * Trigger confetti animation
+         */
+        function triggerConfetti() {
+            const canvas = document.getElementById('confettiCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const confetti = [];
+            const confettiCount = 150;
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+
+            // Create confetti particles
+            for (let i = 0; i < confettiCount; i++) {
+                confetti.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    size: Math.random() * 5 + 5,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speedY: Math.random() * 3 + 2,
+                    speedX: Math.random() * 2 - 1,
+                    rotation: Math.random() * 360
+                });
+            }
+
+            // Animate confetti
+            function animateConfetti() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                confetti.forEach((c, index) => {
+                    ctx.save();
+                    ctx.translate(c.x, c.y);
+                    ctx.rotate(c.rotation * Math.PI / 180);
+                    ctx.fillStyle = c.color;
+                    ctx.fillRect(-c.size / 2, -c.size / 2, c.size, c.size);
+                    ctx.restore();
+
+                    c.y += c.speedY;
+                    c.x += c.speedX;
+                    c.rotation += 5;
+
+                    if (c.y > canvas.height) {
+                        confetti.splice(index, 1);
+                    }
+                });
+
+                if (confetti.length > 0) {
+                    requestAnimationFrame(animateConfetti);
+                } else {
+                    canvas.style.display = 'none';
+                }
+            }
+
+            animateConfetti();
+        }
+
+        /**
+         * Play again with same settings
+         */
+        function playAgain() {
+            const savedState = SessionManager.loadGameState();
+            if (savedState) {
+                URLHelper.navigate('game.html', {
+                    mode: savedState.mode,
+                    level: savedState.level,
+                    difficulty: savedState.difficulty
+                });
+            } else {
+                window.location.href = 'index.html';
+            }
+        }
+
+        /**
+         * Change level
+         */
+        function changeLevel() {
+            const savedState = SessionManager.loadGameState();
+            const mode = savedState ? savedState.mode : 'single';
+            URLHelper.navigate('mode-select.html', { mode: mode });
+        }
+
+        /**
+         * Back to main menu
+         */
+        function backToMenu() {
+            SessionManager.clearGameState();
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,507 @@
+/* ============================================
+   GLOBAL STYLES - Perang Kapal Angka
+   Shared styles across all pages
+   ============================================ */
+
+/* === ROOT VARIABLES === */
+:root {
+    /* Primary Colors - Ocean Theme */
+    --ocean-blue: #1e3a8a;
+    --ocean-light: #3b82f6;
+    --ocean-dark: #0c1e47;
+    --sky-blue: #60a5fa;
+    --sea-green: #10b981;
+    
+    /* Player Colors */
+    --player-red: #ef4444;
+    --player-blue: #3b82f6;
+    --ai-green: #10b981;
+    --ai-purple: #a855f7;
+    
+    /* UI Colors */
+    --white: #ffffff;
+    --black: #000000;
+    --gray-light: #f3f4f6;
+    --gray-medium: #6b7280;
+    --gray-dark: #1f2937;
+    
+    /* Feedback Colors */
+    --success-green: #22c55e;
+    --error-red: #ef4444;
+    --warning-yellow: #fbbf24;
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-xxl: 3rem;
+    
+    /* Fonts */
+    --font-primary: 'Fredoka', sans-serif;
+    --font-size-small: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-large: 1.25rem;
+    --font-size-xl: 1.5rem;
+    --font-size-xxl: 2rem;
+    --font-size-huge: 3rem;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-medium: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* === RESET & BASE STYLES === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-primary);
+    background: linear-gradient(135deg, var(--ocean-dark) 0%, var(--ocean-blue) 100%);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* === TYPOGRAPHY === */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: var(--spacing-md);
+}
+
+h1 { font-size: var(--font-size-huge); }
+h2 { font-size: var(--font-size-xxl); }
+h3 { font-size: var(--font-size-xl); }
+
+p {
+    margin-bottom: var(--spacing-md);
+}
+
+/* === CONTAINER === */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+}
+
+/* === BUTTONS === */
+.btn-main {
+    display: block;
+    width: 100%;
+    padding: var(--spacing-xl);
+    border: none;
+    border-radius: 20px;
+    font-family: var(--font-primary);
+    font-size: var(--font-size-large);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-medium);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-main:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+}
+
+.btn-main:active,
+.btn-main.btn-clicked {
+    transform: translateY(2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-main .btn-icon {
+    font-size: var(--font-size-huge);
+    margin-bottom: var(--spacing-sm);
+}
+
+.btn-main .btn-text {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    margin-bottom: var(--spacing-xs);
+}
+
+.btn-main .btn-subtitle {
+    font-size: var(--font-size-small);
+    opacity: 0.9;
+}
+
+/* Button Variants */
+.btn-single-player {
+    background: linear-gradient(135deg, var(--player-blue), var(--ocean-blue));
+    color: var(--white);
+}
+
+.btn-pvp {
+    background: linear-gradient(135deg, var(--error-red), #dc2626);
+    color: var(--white);
+}
+
+.btn-level {
+    background: linear-gradient(135deg, var(--sky-blue), var(--ocean-light));
+    color: var(--white);
+}
+
+/* === OCEAN BACKGROUND === */
+.ocean-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    height: 200px;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="%2360a5fa" fill-opacity="0.3"/></svg>');
+    background-size: 1200px 120px;
+    background-repeat: repeat-x;
+    animation: wave-animation 15s linear infinite;
+}
+
+.wave1 {
+    bottom: 0;
+    opacity: 0.3;
+    animation-duration: 20s;
+}
+
+.wave2 {
+    bottom: 20px;
+    opacity: 0.2;
+    animation-duration: 15s;
+    animation-direction: reverse;
+}
+
+.wave3 {
+    bottom: 40px;
+    opacity: 0.1;
+    animation-duration: 25s;
+}
+
+@keyframes wave-animation {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-1200px); }
+}
+
+/* ============================================
+   INDIVIDUAL IMAGE ASSETS (Replacing Sprites)
+   ============================================ */
+
+/* === SHIP IMAGES === */
+.ship-sprite {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    display: inline-block;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    position: relative;
+}
+
+/* Player ship (Red) - faces right */
+.sprite-player-red {
+    background-image: url('../images/ship-red.png');
+    width: 200px;
+    height: 110px;
+}
+
+/* Player ship (Blue) - faces right */
+.sprite-player-blue {
+    background-image: url('../images/ship-blue.png');
+    width: 200px;
+    height: 110px;
+}
+
+/* AI ship (Green) - faces left */
+.sprite-ai-green {
+    background-image: url('../images/ship-green.png');
+    width: 200px;
+    height: 110px;
+}
+
+/* AI ship (Purple) - faces left */
+.sprite-ai-purple {
+    background-image: url('../images/ship-purple.png');
+    width: 200px;
+    height: 110px;
+}
+
+/* === SHIP DIRECTION HANDLING === */
+/* Ships facing right (red, blue) don't need flip for player */
+.player-ship .sprite-player-red,
+.player-ship .sprite-player-blue {
+    /* Already facing right - no flip needed */
+}
+
+/* Ships facing left (green, purple) need to be flipped when used by player */
+.player-ship .sprite-ai-green,
+.player-ship .sprite-ai-purple {
+    transform: scaleX(-1);
+}
+
+/* Enemy ships facing left (green, purple) - no flip needed */
+.enemy-ship .sprite-ai-green,
+.enemy-ship .sprite-ai-purple {
+    /* Already facing left - correct for enemy */
+}
+
+/* If enemy uses a right-facing ship, flip it to face left */
+.enemy-ship .sprite-player-red,
+.enemy-ship .sprite-player-blue {
+    transform: scaleX(-1);
+}
+
+/* === PROJECTILE IMAGES === */
+.projectile-image {
+    background-image: url('../images/misile.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 60px;
+    height: 30px;
+    display: inline-block;
+}
+
+/* === EXPLOSION IMAGES === */
+.explosion-image {
+    background-image: url('../images/explode.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+}
+
+/* === UI ICONS (Using Unicode Emoji & CSS) === */
+.icon-checkmark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--success-green);
+    border-radius: 50%;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.icon-checkmark::before {
+    content: '✓';
+}
+
+.icon-xmark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--error-red);
+    border-radius: 50%;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.icon-xmark::before {
+    content: '✗';
+}
+
+/* === TIMER ICON === */
+.timer-icon {
+    font-size: 1.5rem;
+}
+
+.timer-icon::before {
+    content: '⏱️';
+}
+
+/* === STAR ICON === */
+.icon-star {
+    display: inline-block;
+    color: #fbbf24;
+    font-size: 2rem;
+}
+
+.icon-star::before {
+    content: '⭐';
+}
+
+/* === TROPHY ICON === */
+.icon-trophy {
+    display: inline-block;
+    color: #fbbf24;
+    font-size: 3rem;
+}
+
+.icon-trophy::before {
+    content: '🏆';
+}
+
+/* === BROKEN HEART ICON === */
+.icon-broken-heart {
+    display: inline-block;
+    color: var(--error-red);
+    font-size: 3rem;
+}
+
+.icon-broken-heart::before {
+    content: '💔';
+}
+
+/* === ANIMATIONS === */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.fade-in {
+    animation: fadeIn var(--transition-slow) ease-out;
+}
+
+.animate-bounce {
+    animation: bounce 2s ease-in-out infinite;
+}
+
+.animate-shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+.animate-pulse {
+    animation: pulse 1s ease-in-out infinite;
+}
+
+/* === UTILITY CLASSES === */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mt-1 { margin-top: var(--spacing-sm); }
+.mt-2 { margin-top: var(--spacing-md); }
+.mt-3 { margin-top: var(--spacing-lg); }
+.mt-4 { margin-top: var(--spacing-xl); }
+.mt-5 { margin-top: var(--spacing-xxl); }
+
+.mb-1 { margin-bottom: var(--spacing-sm); }
+.mb-2 { margin-bottom: var(--spacing-md); }
+.mb-3 { margin-bottom: var(--spacing-lg); }
+.mb-4 { margin-bottom: var(--spacing-xl); }
+.mb-5 { margin-bottom: var(--spacing-xxl); }
+
+/* === RESPONSIVE === */
+@media (max-width: 1200px) {
+    .ship-sprite {
+        width: 160px;
+        height: 88px;
+    }
+}
+
+@media (max-width: 992px) {
+    .ship-sprite {
+        width: 140px;
+        height: 77px;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --font-size-huge: 2rem;
+        --font-size-xxl: 1.5rem;
+        --font-size-xl: 1.25rem;
+    }
+    
+    h1 { font-size: var(--font-size-xxl); }
+    h2 { font-size: var(--font-size-xl); }
+    
+    .container {
+        padding: var(--spacing-md);
+    }
+    
+    .btn-main {
+        padding: var(--spacing-lg);
+    }
+    
+    .ship-sprite {
+        width: 120px;
+        height: 66px;
+    }
+}
+
+@media (max-width: 576px) {
+    .ship-sprite {
+        width: 100px;
+        height: 55px;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+/* === LOADING STATE === */
+.loading {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top-color: var(--white);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}

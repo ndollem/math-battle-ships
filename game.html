@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bermain - Perang Kapal Angka</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/game.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="game-page">
+    <!-- Background Ocean Animation -->
+    <div class="ocean-background">
+        <div class="wave wave1"></div>
+        <div class="wave wave2"></div>
+        <div class="wave wave3"></div>
+    </div>
+
+    <!-- Game Container -->
+    <div class="game-container">
+        
+        <!-- Question Section -->
+        <div class="question-section" id="questionSection">
+            <!-- Replace the timer icon in game.html -->
+            <div class="timer-container">
+                <div class="timer-icon sprite sprite-stopwatch"></div>
+                <div class="timer-display" id="timerDisplay">5</div>
+            </div>
+            <h1 class="question-text" id="questionText">7 × 8 = ?</h1>
+            <div class="feedback-message" id="feedbackMessage"></div>
+        </div>
+
+        <!-- Battle Area -->
+        <div class="battle-area">
+            <!-- Player Ship (Left) -->
+            <div class="ship-container player-ship" id="playerShipContainer">
+                <div class="player-label" id="playerLabel">Kamu</div>
+                <div class="ship-sprite sprite sprite-player-red" id="playerShip"></div>
+                <div class="hp-bar-container">
+                    <div class="hp-bar">
+                        <div class="hp-fill player-hp" id="playerHPFill" style="width: 100%"></div>
+                    </div>
+                    <p class="hp-text" id="playerHPText">HP: 100/100</p>
+                </div>
+                <div class="answer-indicator" id="playerAnswerIndicator"></div>
+            </div>
+
+            <!-- VS Indicator -->
+            <div class="vs-indicator">
+                <span class="vs-text">VS</span>
+            </div>
+
+            <!-- Enemy/Player2 Ship (Right) -->
+            <div class="ship-container enemy-ship" id="enemyShipContainer">
+                <div class="player-label" id="enemyLabel">AI</div>
+                <div class="ship-sprite sprite sprite-ai-green" id="enemyShip"></div>
+                <div class="hp-bar-container">
+                    <div class="hp-bar">
+                        <div class="hp-fill enemy-hp" id="enemyHPFill" style="width: 100%"></div>
+                    </div>
+                    <p class="hp-text" id="enemyHPText">HP: 100/100</p>
+                </div>
+                <div class="answer-indicator" id="enemyAnswerIndicator"></div>
+            </div>
+
+            <!-- Attack Animation Layer -->
+            <canvas id="attackCanvas" class="attack-canvas"></canvas>
+        </div>
+
+        <!-- Answer Choices Section -->
+        <div class="choices-section" id="choicesSection">
+            <!-- Single Player Mode Choices -->
+            <div class="single-player-choices" id="singlePlayerChoices">
+                <div class="choices-grid">
+                    <button class="choice-btn" data-index="0" data-key="1">
+                        <span class="answer-number" id="choice0">42</span>
+                        <span class="key-hint">1</span>
+                    </button>
+                    <button class="choice-btn" data-index="1" data-key="2">
+                        <span class="answer-number" id="choice1">56</span>
+                        <span class="key-hint">2</span>
+                    </button>
+                    <button class="choice-btn" data-index="2" data-key="3">
+                        <span class="answer-number" id="choice2">54</span>
+                        <span class="key-hint">3</span>
+                    </button>
+                    <button class="choice-btn" data-index="3" data-key="4">
+                        <span class="answer-number" id="choice3">48</span>
+                        <span class="key-hint">4</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- PvP Mode Choices -->
+            <div class="pvp-choices" id="pvpChoices" style="display: none;">
+                <!-- Player 1 Choices (Left) -->
+                <div class="player-choices player1-choices">
+                    <p class="player-choices-label">Player 1 (Q, W, E, R)</p>
+                    <div class="choices-grid">
+                        <button class="choice-btn p1" data-index="0" data-key="q">
+                            <span class="answer-number" id="p1choice0">42</span>
+                            <span class="key-hint">Q</span>
+                        </button>
+                        <button class="choice-btn p1" data-index="1" data-key="w">
+                            <span class="answer-number" id="p1choice1">56</span>
+                            <span class="key-hint">W</span>
+                        </button>
+                        <button class="choice-btn p1" data-index="2" data-key="e">
+                            <span class="answer-number" id="p1choice2">54</span>
+                            <span class="key-hint">E</span>
+                        </button>
+                        <button class="choice-btn p1" data-index="3" data-key="r">
+                            <span class="answer-number" id="p1choice3">48</span>
+                            <span class="key-hint">R</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <div class="choices-divider"></div>
+
+                <!-- Player 2 Choices (Right) -->
+                <div class="player-choices player2-choices">
+                    <p class="player-choices-label">Player 2 (U, I, O, P)</p>
+                    <div class="choices-grid">
+                        <button class="choice-btn p2" data-index="0" data-key="u">
+                            <span class="answer-number" id="p2choice0">42</span>
+                            <span class="key-hint">U</span>
+                        </button>
+                        <button class="choice-btn p2" data-index="1" data-key="i">
+                            <span class="answer-number" id="p2choice1">56</span>
+                            <span class="key-hint">I</span>
+                        </button>
+                        <button class="choice-btn p2" data-index="2" data-key="o">
+                            <span class="answer-number" id="p2choice2">54</span>
+                            <span class="key-hint">O</span>
+                        </button>
+                        <button class="choice-btn p2" data-index="3" data-key="p">
+                            <span class="answer-number" id="p2choice3">48</span>
+                            <span class="key-hint">P</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Info Bar -->
+        <div class="game-info-bar">
+            <div class="info-item">
+                <span class="info-label">Level:</span>
+                <span class="info-value" id="levelDisplay">SD 3</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Soal:</span>
+                <span class="info-value" id="questionCountDisplay">1/10</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Benar:</span>
+                <span class="info-value correct" id="correctCountDisplay">0</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Salah:</span>
+                <span class="info-value wrong" id="wrongCountDisplay">0</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Pause Menu Modal (Optional) -->
+    <div class="modal fade" id="pauseModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content game-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title">⏸️ Game Dijeda</h5>
+                </div>
+                <div class="modal-body">
+                    <button class="btn-modal" onclick="resumeGame()">Lanjutkan</button>
+                    <button class="btn-modal btn-secondary" onclick="quitGame()">Keluar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+    <script src="js/question-engine.js"></script>
+    <script src="js/battle-logic.js"></script>
+    <script src="js/ai-player.js"></script>
+    <script src="js/animation.js"></script>
+    <script src="js/game-controller.js"></script>
+    
+    <script>
+        // Initialize game on load
+        window.addEventListener('DOMContentLoaded', function() {
+            // Get game parameters from URL
+            const mode = URLHelper.getParam('mode');
+            const level = parseInt(URLHelper.getParam('level'));
+            const difficulty = URLHelper.getParam('difficulty') || 'medium';
+
+            // Validate parameters
+            if (!mode || !Validator.isValidMode(mode)) {
+                alert('Mode tidak valid!');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            if (!level || !Validator.isValidLevel(level)) {
+                alert('Level tidak valid!');
+                window.location.href = 'mode-select.html?mode=' + mode;
+                return;
+            }
+
+            // Initialize game state
+            GameState.mode = mode;
+            GameState.level = level;
+            GameState.difficulty = difficulty;
+
+            // Update display
+            document.getElementById('levelDisplay').textContent = `SD ${level}`;
+
+            // Show appropriate choices section
+            if (mode === 'single') {
+                document.getElementById('singlePlayerChoices').style.display = 'block';
+                document.getElementById('pvpChoices').style.display = 'none';
+                document.getElementById('enemyLabel').textContent = 'AI';
+            } else if (mode === 'pvp') {
+                document.getElementById('singlePlayerChoices').style.display = 'none';
+                document.getElementById('pvpChoices').style.display = 'flex';
+                document.getElementById('playerLabel').textContent = 'Player 1';
+                document.getElementById('enemyLabel').textContent = 'Player 2';
+                // Change enemy ship sprite
+                document.getElementById('enemyShip').className = 'ship-sprite sprite sprite-player-blue';
+            }
+
+            // Initialize game controller
+            if (typeof GameController !== 'undefined') {
+                GameController.init();
+            } else {
+                console.error('GameController not loaded!');
+            }
+
+            // Setup canvas
+            setupCanvas();
+        });
+
+        // Setup attack animation canvas
+        function setupCanvas() {
+            const canvas = document.getElementById('attackCanvas');
+            const battleArea = document.querySelector('.battle-area');
+            canvas.width = battleArea.offsetWidth;
+            canvas.height = battleArea.offsetHeight;
+
+            // Resize canvas on window resize
+            window.addEventListener('resize', () => {
+                canvas.width = battleArea.offsetWidth;
+                canvas.height = battleArea.offsetHeight;
+            });
+        }
+
+        // Quit game
+        function quitGame() {
+            if (confirm('Apakah kamu yakin ingin keluar?')) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Resume game (for pause functionality)
+        function resumeGame() {
+            const modal = bootstrap.Modal.getInstance(document.getElementById('pauseModal'));
+            if (modal) modal.hide();
+            if (typeof GameController !== 'undefined') {
+                GameController.resume();
+            }
+        }
+
+        // ESC key to pause (optional feature)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (typeof GameController !== 'undefined') {
+                    GameController.pause();
+                }
+                const modal = new bootstrap.Modal(document.getElementById('pauseModal'));
+                modal.show();
+            }
+        });
+    </script>
+</body>
+</html>
