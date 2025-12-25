@@ -140,67 +140,91 @@
     
     <script>
         // Game results
+        let gameMode = null;        // 👈 TAMBAHKAN
         let winner = null;
         let correctCount = 0;
         let wrongCount = 0;
         let totalCount = 0;
         let accuracyPercent = 0;
         let avgTimeMs = 0;
-
+    
         // Initialize page
         window.addEventListener('DOMContentLoaded', function() {
             // Get results from URL parameters
+            gameMode = URLHelper.getParam('mode') || 'single';  // 👈 TAMBAHKAN
             winner = URLHelper.getParam('winner');
             correctCount = parseInt(URLHelper.getParam('correct')) || 0;
             wrongCount = parseInt(URLHelper.getParam('wrong')) || 0;
             totalCount = parseInt(URLHelper.getParam('total')) || 0;
             accuracyPercent = parseInt(URLHelper.getParam('accuracy')) || 0;
             avgTimeMs = parseInt(URLHelper.getParam('avgTime')) || 0;
-
+    
             // Update display
             updateResultBanner();
             updateStatistics();
             updatePerformanceMessage();
             updateTips();
-
+    
             // Trigger confetti for victory
-            if (winner === 'player') {
+            if (winner === 'player' || winner === 'player1') {
                 triggerConfetti();
             }
-
+    
             // Add entrance animation
             setTimeout(() => {
                 document.querySelector('.result-content').classList.add('fade-in');
             }, 100);
         });
-
+    
         /**
-         * Update result banner based on winner
+         * Update result banner based on winner and mode
          */
         function updateResultBanner() {
             const banner = document.getElementById('resultBanner');
             const icon = document.getElementById('bannerIcon');
             const title = document.getElementById('bannerTitle');
             const subtitle = document.getElementById('bannerSubtitle');
-
-            if (winner === 'player') {
-                banner.className = 'result-banner victory';
-                icon.textContent = '🏆';
-                title.textContent = 'MENANG!';
-                subtitle.textContent = 'Selamat! Kamu berhasil mengalahkan musuh!';
-            } else if (winner === 'enemy') {
-                banner.className = 'result-banner defeat';
-                icon.textContent = '😢';
-                title.textContent = 'KALAH!';
-                subtitle.textContent = 'Jangan menyerah! Coba lagi dan jadilah lebih baik!';
-            } else {
-                banner.className = 'result-banner draw';
-                icon.textContent = '🤝';
-                title.textContent = 'SERI!';
-                subtitle.textContent = 'Pertempuran yang seru! Kalian sama-sama hebat!';
+    
+            // PvP Mode - Show Player Identity
+            if (gameMode === 'pvp') {
+                if (winner === 'player1') {
+                    banner.className = 'result-banner victory';
+                    icon.textContent = '🏆';
+                    title.textContent = 'PEMAIN 1 MENANG!';
+                    subtitle.textContent = '🎉 Selamat Pemain 1! Kamu berhasil mengalahkan Pemain 2!';
+                } else if (winner === 'player2') {
+                    banner.className = 'result-banner defeat';
+                    icon.textContent = '🏆';
+                    title.textContent = 'PEMAIN 2 MENANG!';
+                    subtitle.textContent = '🎉 Selamat Pemain 2! Kamu berhasil mengalahkan Pemain 1!';
+                } else {
+                    banner.className = 'result-banner draw';
+                    icon.textContent = '🤝';
+                    title.textContent = 'SERI!';
+                    subtitle.textContent = '⚔️ Pertempuran yang seru! Pemain 1 dan Pemain 2 sama-sama hebat!';
+                }
+            } 
+            // Single Player Mode - Original Logic
+            else {
+                if (winner === 'player') {
+                    banner.className = 'result-banner victory';
+                    icon.textContent = '🏆';
+                    title.textContent = 'MENANG!';
+                    subtitle.textContent = '🎉 Selamat! Kamu berhasil mengalahkan komputer!';
+                } else if (winner === 'enemy') {
+                    banner.className = 'result-banner defeat';
+                    icon.textContent = '😢';
+                    title.textContent = 'KALAH!';
+                    subtitle.textContent = '💪 Jangan menyerah! Coba lagi dan jadilah lebih baik!';
+                } else {
+                    banner.className = 'result-banner draw';
+                    icon.textContent = '🤝';
+                    title.textContent = 'SERI!';
+                    subtitle.textContent = '⚔️ Pertempuran yang seru! Kalian sama-sama hebat!';
+                }
             }
         }
-
+    
         /**
          * Update statistics display
          */
@@ -213,7 +237,7 @@
             // Format average time
             const avgTimeSec = (avgTimeMs / 1000).toFixed(1);
             document.getElementById('avgTime').textContent = avgTimeSec + 's';
-
+    
             // Calculate grade
             const grade = calculateGrade(accuracyPercent, avgTimeMs);
             document.getElementById('grade').textContent = grade;

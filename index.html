@@ -121,6 +121,26 @@
                 <p class="subtitle">Math Battle Ships - Belajar Perkalian Sambil Bertarung!</p>
             </div>
 
+            <!-- NEW: Subject Type Selection -->
+            <div class="subject-selection text-center mb-4" id="subjectSelection">
+                <h3 class="subject-title">📚 Pilih Tipe Pelajaran:</h3>
+                <div class="subject-buttons">
+                    <button class="btn-subject active" data-subject="math" onclick="selectSubject('math')">
+                        <div class="subject-icon">🔢</div>
+                        <div class="subject-name">Matematika</div>
+                        <div class="subject-desc">Perkalian</div>
+                    </button>
+                    <button class="btn-subject" data-subject="science" onclick="selectSubject('science')">
+                        <div class="subject-icon">🌿</div>
+                        <div class="subject-name">IPAS</div>
+                        <div class="subject-desc">Rantai Makanan</div>
+                    </button>
+                </div>
+                <p class="selected-subject-text" id="selectedSubjectText">
+                    <strong>Dipilih:</strong> Matematika - Perkalian
+                </p>
+            </div>
+
             <!-- Header Banner -->
             <div class="header-banner">
                 <img src="images/header.png" alt="Perang Kapal Angka" class="header-image">
@@ -175,29 +195,60 @@
     <script src="js/main.js"></script>
     
     <script>
-        // Navigation functions
+        // Store selected subject
+        let selectedSubject = 'math'; // Default
+    
+        // Select subject function
+        function selectSubject(subject) {
+            selectedSubject = subject;
+            
+            // Update UI
+            document.querySelectorAll('.btn-subject').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-subject="${subject}"]`).classList.add('active');
+            
+            // Update text
+            const textMap = {
+                'math': 'Matematika - Perkalian',
+                'science': 'IPAS - Rantai Makanan'
+            };
+            document.getElementById('selectedSubjectText').innerHTML = 
+                `<strong>Dipilih:</strong> ${textMap[subject]}`;
+            
+            // Store in session
+            sessionStorage.setItem('selectedSubject', subject);
+        }
+    
+        // Navigation functions (update to include subject)
         function startSinglePlayer() {
-            // Add button click animation
             event.target.closest('.btn-main').classList.add('btn-clicked');
             
-            // Navigate to mode select after short delay
+            // Save subject selection
+            sessionStorage.setItem('selectedSubject', selectedSubject);
+            
             setTimeout(() => {
-                window.location.href = 'mode-select.html?mode=single';
+                window.location.href = `mode-select.html?mode=single&subject=${selectedSubject}`;
             }, 300);
         }
-
+    
         function startPvP() {
-            // Add button click animation
             event.target.closest('.btn-main').classList.add('btn-clicked');
             
-            // Navigate to mode select after short delay
+            // Save subject selection
+            sessionStorage.setItem('selectedSubject', selectedSubject);
+            
             setTimeout(() => {
-                window.location.href = 'mode-select.html?mode=pvp';
+                window.location.href = `mode-select.html?mode=pvp&subject=${selectedSubject}`;
             }, 300);
         }
-
-        // Add entrance animation on load
+    
+        // Load saved subject on page load
         window.addEventListener('load', () => {
+            const saved = sessionStorage.getItem('selectedSubject');
+            if (saved) {
+                selectSubject(saved);
+            }
             document.querySelector('.landing-content').classList.add('fade-in');
         });
     </script>

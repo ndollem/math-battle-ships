@@ -492,3 +492,24 @@
         color: black;
     }
 }
+
+/* === RESULT BANNER VARIATIONS === */
+
+/* Player 1 Victory (in PvP) */
+.result-banner.victory.player1 {
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+    border-color: #dc2626;
+}
+
+/* Player 2 Victory (in PvP) */
+.result-banner.victory.player2 {
+    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    border-color: #2563eb;
+}
+
+/* Update banner title for PvP to be more compact on mobile */
+@media (max-width: 576px) {
+    .result-banner .banner-title {
+        font-size: 2.5rem; /* Slightly smaller for longer text */
+    }
+}

@@ -364,3 +364,93 @@
         transform: scale(0.95);
     }
 }
+
+/* === SUBJECT SELECTION === */
+.subject-selection {
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.subject-title {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: var(--spacing-lg);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.subject-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.btn-subject {
+    padding: var(--spacing-lg);
+    background: rgba(255, 255, 255, 0.15);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    color: var(--white);
+    font-family: var(--font-primary);
+    cursor: pointer;
+    transition: all var(--transition-medium);
+    text-align: center;
+}
+
+.btn-subject:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.btn-subject.active {
+    background: linear-gradient(135deg, var(--success-green), #16a34a);
+    border-color: var(--success-green);
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(34, 197, 94, 0.4);
+}
+
+.subject-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.subject-name {
+    font-size: var(--font-size-large);
+    font-weight: 700;
+    margin-bottom: var(--spacing-xs);
+}
+
+.subject-desc {
+    font-size: var(--font-size-small);
+    opacity: 0.9;
+}
+
+.selected-subject-text {
+    font-size: var(--font-size-base);
+    color: var(--sky-blue);
+    margin: var(--spacing-md) 0 0 0;
+    padding: var(--spacing-sm);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .subject-buttons {
+        grid-template-columns: 1fr;
+    }
+    
+    .subject-icon {
+        font-size: 2.5rem;
+    }
+}
