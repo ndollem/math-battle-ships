@@ -254,12 +254,6 @@ p {
     height: 110px;
 }
 
-/* === SHIP DIRECTION HANDLING === */
-/* Ships facing right (red, blue) don't need flip for player */
-.player-ship .sprite-player-red,
-.player-ship .sprite-player-blue {
-    /* Already facing right - no flip needed */
-}
 
 /* Ships facing left (green, purple) need to be flipped when used by player */
 .player-ship .sprite-ai-green,
@@ -267,11 +261,6 @@ p {
     transform: scaleX(-1);
 }
 
-/* Enemy ships facing left (green, purple) - no flip needed */
-.enemy-ship .sprite-ai-green,
-.enemy-ship .sprite-ai-purple {
-    /* Already facing left - correct for enemy */
-}
 
 /* If enemy uses a right-facing ship, flip it to face left */
 .enemy-ship .sprite-player-red,
