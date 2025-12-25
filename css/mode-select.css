@@ -7,6 +7,7 @@
 .mode-select-page {
     display: flex;
     flex-direction: column;
+    justify-content: center; /* Add this line - was missing! */
     align-items: center;
     min-height: 100vh;
     padding: var(--spacing-lg) 0;
@@ -16,6 +17,7 @@
     width: 100%;
     max-width: 1000px;
     padding: var(--spacing-xl);
+    margin: 0 auto; /* Add horizontal centering */
     opacity: 0;
     transform: translateY(30px);
     transition: all 0.8s ease-out;
