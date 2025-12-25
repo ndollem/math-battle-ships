@@ -1,20 +1,106 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perang Kapal Angka - Math Battle Ships</title>
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/landing.css">
-    
-    <!-- Google Fonts - Child-friendly font -->
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
-</head>
+    <head>
+        <!-- Basic Meta Tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        
+        <!-- Primary Meta Tags -->
+        <title>Perang Kapal Angka - Math Battle Ships | Game Edukasi Matematika</title>
+        <meta name="title" content="Perang Kapal Angka - Math Battle Ships | Game Edukasi Matematika">
+        <meta name="description" content="Game edukasi matematika untuk SD kelas 1-6. Belajar perkalian sambil bertarung dengan kapal! Main sendiri melawan AI atau lawan teman. Gratis dan tanpa iklan.">
+        <meta name="keywords" content="game matematika, belajar perkalian, math battle ships, game edukasi anak, SD kelas 1-6, game perkalian, matematika interaktif, game edukasi Indonesia">
+        <meta name="author" content="Khusnul Khotimah">
+        <meta name="robots" content="index, follow">
+        <meta name="language" content="Indonesian">
+        <meta name="revisit-after" content="7 days">
+        
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://ndollem.github.io/math-battle-ships/">
+        <meta property="og:site_name" content="Perang Kapal Angka">
+        <meta property="og:title" content="Perang Kapal Angka - Math Battle Ships">
+        <meta property="og:description" content="Game edukasi matematika untuk SD kelas 1-6. Belajar perkalian sambil bertarung dengan kapal! Main sendiri melawan AI atau lawan teman. Gratis dan tanpa iklan.">
+        <meta property="og:image" content="https://ndollem.github.io/math-battle-ships/images/og-image.png">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta property="og:image:alt" content="Perang Kapal Angka - Game Matematika Edukasi">
+        <meta property="og:locale" content="id_ID">
+        
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:url" content="https://ndollem.github.io/math-battle-ships/">
+        <meta name="twitter:title" content="Perang Kapal Angka - Math Battle Ships">
+        <meta name="twitter:description" content="Game edukasi matematika untuk SD kelas 1-6. Belajar perkalian sambil bertarung dengan kapal!">
+        <meta name="twitter:image" content="https://ndollem.github.io/math-battle-ships/images/og-image.png">
+        <meta name="twitter:image:alt" content="Perang Kapal Angka - Game Matematika Edukasi">
+        
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+        <link rel="manifest" href="site.webmanifest">
+        
+        <!-- Theme Color -->
+        <meta name="theme-color" content="#1e3a8a">
+        <meta name="msapplication-TileColor" content="#1e3a8a">
+        
+        <!-- Canonical URL -->
+        <link rel="canonical" href="https://ndollem.github.io/math-battle-ships/">
+        
+        <!-- Preconnect for Performance -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preconnect" href="https://cdn.jsdelivr.net">
+        
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/landing.css">
+        
+        <!-- Google Fonts - Child-friendly font -->
+        <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+        
+        <!-- Structured Data (JSON-LD) -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "Perang Kapal Angka",
+          "alternateName": "Math Battle Ships",
+          "url": "https://ndollem.github.io/math-battle-ships/",
+          "description": "Game edukasi matematika untuk SD kelas 1-6. Belajar perkalian sambil bertarung dengan kapal!",
+          "applicationCategory": "EducationalApplication",
+          "operatingSystem": "Any",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "IDR"
+          },
+          "author": {
+            "@type": "Person",
+            "name": "Khusnul Khotimah"
+          },
+          "audience": {
+            "@type": "EducationalAudience",
+            "educationalRole": "student",
+            "educationalLevel": "Elementary School"
+          },
+          "keywords": "game matematika, belajar perkalian, math battle ships, game edukasi anak",
+          "inLanguage": "id-ID",
+          "isAccessibleForFree": true,
+          "image": "https://ndollem.github.io/math-battle-ships/images/og-image.png",
+          "screenshot": "https://ndollem.github.io/math-battle-ships/images/og-image.png",
+          "applicationSubCategory": "Educational Game",
+          "educationalUse": "Practice",
+          "learningResourceType": "Interactive Game",
+          "typicalAgeRange": "7-12"
+        }
+        </script>
+    </head>
 <body class="landing-page">
     <!-- Background Ocean Animation -->
     <div class="ocean-background">
