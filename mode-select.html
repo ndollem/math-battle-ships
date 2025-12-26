@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pilih Level - Perang Kapal Angka</title>
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/mode-select.css">
-    
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body class="mode-select-page">
     <!-- Background Ocean Animation -->
     <div class="ocean-background">
@@ -26,7 +28,7 @@
     <!-- Main Content -->
     <div class="container">
         <div class="mode-select-content">
-            
+
             <!-- Header with Back Button -->
             <div class="page-header">
                 <button class="btn-back" onclick="goBack()">
@@ -36,7 +38,7 @@
                 <p class="page-subtitle" id="modeSubtitle">Sesuaikan dengan kelasmu</p>
                 <!-- NEW: Show selected subject -->
                 <p class="selected-subject-badge" id="subjectBadge"></p>
-            </div>            
+            </div>
 
             <!-- Difficulty Selection (for Single Player only) -->
             <div class="difficulty-section" id="difficultySection" style="display: none;">
@@ -64,18 +66,14 @@
             <div class="level-selection">
                 <h3 class="section-title">Pilih Kelas SD:</h3>
                 <div class="level-grid">
-                    
+
                     <!-- SD Level 1 -->
                     <div class="level-card" data-level="1" onclick="selectLevel(1)">
                         <div class="level-badge">
                             <span class="level-number">1</span>
                         </div>
                         <h4 class="level-title">Kelas 1</h4>
-                        <p class="level-range">Perkalian 1-5</p>
-                        <div class="level-examples">
-                            <span class="example">2 × 3</span>
-                            <span class="example">4 × 5</span>
-                        </div>
+                        <p class="level-range" data-level-desc="1"></p>
                     </div>
 
                     <!-- SD Level 2 -->
@@ -84,11 +82,7 @@
                             <span class="level-number">2</span>
                         </div>
                         <h4 class="level-title">Kelas 2</h4>
-                        <p class="level-range">Perkalian 1-5</p>
-                        <div class="level-examples">
-                            <span class="example">3 × 5</span>
-                            <span class="example">5 × 5</span>
-                        </div>
+                        <p class="level-range" data-level-desc="2"></p>
                     </div>
 
                     <!-- SD Level 3 -->
@@ -97,11 +91,7 @@
                             <span class="level-number">3</span>
                         </div>
                         <h4 class="level-title">Kelas 3</h4>
-                        <p class="level-range">Perkalian 1-10</p>
-                        <div class="level-examples">
-                            <span class="example">6 × 7</span>
-                            <span class="example">8 × 9</span>
-                        </div>
+                        <p class="level-range" data-level-desc="3"></p>
                     </div>
 
                     <!-- SD Level 4 -->
@@ -110,11 +100,7 @@
                             <span class="level-number">4</span>
                         </div>
                         <h4 class="level-title">Kelas 4</h4>
-                        <p class="level-range">Perkalian 1-10</p>
-                        <div class="level-examples">
-                            <span class="example">7 × 8</span>
-                            <span class="example">9 × 10</span>
-                        </div>
+                        <p class="level-range" data-level-desc="4"></p>
                     </div>
 
                     <!-- SD Level 5 -->
@@ -123,11 +109,7 @@
                             <span class="level-number">5</span>
                         </div>
                         <h4 class="level-title">Kelas 5</h4>
-                        <p class="level-range">Perkalian 1-12</p>
-                        <div class="level-examples">
-                            <span class="example">9 × 11</span>
-                            <span class="example">10 × 12</span>
-                        </div>
+                        <p class="level-range" data-level-desc="5"></p>
                     </div>
 
                     <!-- SD Level 6 -->
@@ -136,11 +118,7 @@
                             <span class="level-number">6</span>
                         </div>
                         <h4 class="level-title">Kelas 6</h4>
-                        <p class="level-range">Perkalian 1-12</p>
-                        <div class="level-examples">
-                            <span class="example">11 × 12</span>
-                            <span class="example">12 × 12</span>
-                        </div>
+                        <p class="level-range" data-level-desc="6"></p>
                     </div>
 
                 </div>
@@ -162,21 +140,105 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Custom JS -->
     <script src="js/main.js"></script>
-    
+
     <script>
         // Page state
         let selectedMode = null;
         let selectedLevel = null;
         let selectedDifficulty = 'medium'; // Default difficulty
-
+        let currentSubject = 'math'; // Default subject
+    
+        // Level descriptions based on subject
+        const levelDescriptions = {
+            math: {
+                1: "Perkalian 1-5",
+                2: "Perkalian 1-5",
+                3: "Perkalian 1-10",
+                4: "Perkalian 1-10",
+                5: "Perkalian 1-12",
+                6: "Perkalian 1-12"
+            },
+            science: {
+                1: "Produsen & Konsumen",
+                2: "Herbivora & Karnivora",
+                3: "Rantai Makanan Dasar",
+                4: "Pengurai & Omnivora",
+                5: "Piramida Makanan",
+                6: "Jaring-jaring Makanan"
+            }
+        };
+    
         // Initialize page
         window.addEventListener('DOMContentLoaded', function() {
-            // Get mode from URL
-            selectedMode = URLHelper.getParam('mode');
-            const subject = URLHelper.getParam('subject') || sessionStorage.getItem('selectedSubject') || 'math';
+            console.log('🔄 Mode Select page loading...');
+            
+            try {
+                // Get mode and subject from URL
+                selectedMode = getUrlParameter('mode');
+                currentSubject = getUrlParameter('subject') || sessionStorage.getItem('selectedSubject') || 'math';
+                
+                console.log('Mode:', selectedMode, 'Subject:', currentSubject);
+                
+                // Update subject badge
+                updateSubjectBadge();
+                
+                // Validate mode
+                if (!selectedMode || (selectedMode !== 'single' && selectedMode !== 'pvp')) {
+                    console.error('❌ Invalid mode:', selectedMode);
+                    alert('Mode tidak valid!');
+                    window.location.href = 'index.html';
+                    return;
+                }
+    
+                // Update page title based on mode
+                updatePageTitle();
+                
+                // Show difficulty selection for single player
+                if (selectedMode === 'single') {
+                    document.getElementById('difficultySection').style.display = 'block';
+                    // Set default difficulty as selected
+                    document.querySelector('[data-difficulty="medium"]').classList.add('selected');  // Changed from 'active' to 'selected'
+                }
+    
+                // Update level descriptions based on subject
+                updateLevelDescriptions();
+                
+                // Update selection info
+                updateSelectionInfo();
+                
+                console.log('✅ Mode Select page loaded successfully');
+
+                // Trigger fade-in animation
+                setTimeout(function() {
+                    document.querySelector('.mode-select-content').classList.add('fade-in');
+                }, 100);
+                
+            } catch (error) {
+                console.error('❌ Error initializing page:', error);
+                alert('Terjadi kesalahan saat memuat halaman. Kembali ke menu utama.');
+                window.location.href = 'index.html';
+            }
+        });
+    
+        /**
+         * Get URL parameter (fallback if URLHelper not available)
+         */
+        function getUrlParameter(name) {
+            if (typeof URLHelper !== 'undefined' && URLHelper.getParam) {
+                return URLHelper.getParam(name);
+            }
+            // Fallback manual parsing
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
+    
+        /**
+         * Update subject badge
+         */
+        function updateSubjectBadge() {
             const subjectNames = {
                 'math': '🔢 Matematika - Perkalian',
                 'science': '🌿 IPAS - Rantai Makanan'
@@ -184,7 +246,7 @@
             
             const badge = document.getElementById('subjectBadge');
             if (badge) {
-                badge.textContent = subjectNames[subject];
+                badge.textContent = subjectNames[currentSubject] || subjectNames.math;
                 badge.style.cssText = `
                     display: inline-block;
                     padding: 8px 16px;
@@ -195,58 +257,63 @@
                     font-size: 1rem;
                 `;
             }
+        }
+    
+        /**
+         * Update level descriptions based on selected subject
+         */
+        function updateLevelDescriptions() {
+            const descriptions = levelDescriptions[currentSubject] || levelDescriptions.math;
             
-            if (!selectedMode || !Validator.isValidMode(selectedMode)) {
-                // Invalid mode, redirect back
-                alert('Mode tidak valid!');
-                window.location.href = 'index.html';
-                return;
+            // Update all level description elements
+            for (let level = 1; level <= 6; level++) {
+                const descElement = document.querySelector(`[data-level-desc="${level}"]`);
+                if (descElement) {
+                    descElement.textContent = descriptions[level];
+                }
             }
-
-            // Update page title based on mode
-            updatePageTitle();
-            
-            // Show difficulty selection for single player
-            if (selectedMode === 'single') {
-                document.getElementById('difficultySection').style.display = 'block';
-                // Select medium difficulty by default
-                selectDifficulty('medium');
-            }
-
-            // Add entrance animation
-            setTimeout(() => {
-                document.querySelector('.mode-select-content').classList.add('fade-in');
-            }, 100);
-        });
-
-        // Update page title based on mode
+        }
+    
+        /**
+         * Update page title based on mode
+         */
         function updatePageTitle() {
             const titleElement = document.getElementById('modeTitle');
             const subtitleElement = document.getElementById('modeSubtitle');
             
             if (selectedMode === 'single') {
-                titleElement.textContent = '🎮 Mode Single Player';
-                subtitleElement.textContent = 'Lawan komputer dan tingkatkan kemampuanmu!';
+                titleElement.textContent = 'Main Sendiri';
+                subtitleElement.textContent = 'Pilih level dan kesulitan AI';
             } else if (selectedMode === 'pvp') {
-                titleElement.textContent = '⚔️ Mode Player vs Player';
-                subtitleElement.textContent = 'Adu cepat dengan temanmu!';
+                titleElement.textContent = 'Lawan Teman';
+                subtitleElement.textContent = 'Pilih level untuk bermain berdua';
             }
         }
-
-        // Select difficulty
+    
+        /**
+         * Select difficulty
+         */
         function selectDifficulty(difficulty) {
             selectedDifficulty = difficulty;
             
-            // Update UI
+            // Update UI - remove 'selected' from all buttons
             document.querySelectorAll('.btn-difficulty').forEach(btn => {
-                btn.classList.remove('selected');
+                btn.classList.remove('selected');  // Changed from 'active' to 'selected'
             });
-            document.querySelector(`[data-difficulty="${difficulty}"]`).classList.add('selected');
             
+            // Add 'selected' to clicked button
+            const selectedBtn = document.querySelector(`[data-difficulty="${difficulty}"]`);
+            if (selectedBtn) {
+                selectedBtn.classList.add('selected');  // Changed from 'active' to 'selected'
+            }
+            
+            // Update selection info
             updateSelectionInfo();
         }
-
-        // Select level
+    
+        /**
+         * Select level
+         */
         function selectLevel(level) {
             selectedLevel = level;
             
@@ -254,21 +321,29 @@
             document.querySelectorAll('.level-card').forEach(card => {
                 card.classList.remove('selected');
             });
-            document.querySelector(`[data-level="${level}"]`).classList.add('selected');
+            
+            const selectedCard = document.querySelector(`[data-level="${level}"]`);
+            if (selectedCard) {
+                selectedCard.classList.add('selected');
+            }
             
             // Enable start button
-            document.getElementById('btnStart').disabled = false;
+            const btnStart = document.getElementById('btnStart');
+            if (btnStart) {
+                btnStart.disabled = false;
+            }
             
-            // Update selection info
+            // Update info
             updateSelectionInfo();
-            
-            // Pulse animation on start button
-            AnimationHelper.pulse(document.getElementById('btnStart'));
         }
-
-        // Update selection info text
+    
+        /**
+         * Update selection info display
+         */
         function updateSelectionInfo() {
             const infoElement = document.getElementById('selectionInfo');
+            
+            if (!infoElement) return;
             
             if (selectedLevel) {
                 let text = `Level dipilih: Kelas ${selectedLevel}`;
@@ -287,42 +362,54 @@
                 infoElement.style.color = '#f3f4f6';
             }
         }
-
-        // Start game
+    
+        /**
+         * Start game
+         */
         function startGame() {
             if (!selectedLevel) {
                 alert('Pilih level terlebih dahulu!');
                 return;
             }
-
-            // Save settings
-            StorageManager.saveSettings({
-                mode: selectedMode,
-                level: selectedLevel,
-                difficulty: selectedDifficulty
-            });
-
-            // Get subject from URL or session
-            const subject = URLHelper.getParam('subject') || sessionStorage.getItem('selectedSubject') || 'math';
-
-            // Navigate to game page with parameters
-            const params = {
-                mode: selectedMode,
-                level: selectedLevel,
-                subject: subject  // 👈 TAMBAHKAN INI
-            };
-            
-            if (selectedMode === 'single') {
-                params.difficulty = selectedDifficulty;
+    
+            try {
+                // Save settings (if StorageManager available)
+                if (typeof StorageManager !== 'undefined') {
+                    StorageManager.saveSettings({
+                        mode: selectedMode,
+                        level: selectedLevel,
+                        difficulty: selectedDifficulty
+                    });
+                }
+    
+                // Get subject from URL or session
+                const subject = getUrlParameter('subject') || sessionStorage.getItem('selectedSubject') || 'math';
+    
+                // Build URL parameters
+                let url = 'game.html?mode=' + selectedMode + '&level=' + selectedLevel + '&subject=' + subject;
+                
+                if (selectedMode === 'single') {
+                    url += '&difficulty=' + selectedDifficulty;
+                }
+    
+                console.log('🚀 Starting game:', url);
+    
+                // Navigate to game page
+                window.location.href = url;
+                
+            } catch (error) {
+                console.error('❌ Error starting game:', error);
+                alert('Terjadi kesalahan saat memulai permainan. Silakan coba lagi.');
             }
-
-            URLHelper.navigate('game.html', params);
         }
-
-        // Go back to landing page
+    
+        /**
+         * Go back to landing page
+         */
         function goBack() {
             window.location.href = 'index.html';
         }
     </script>
 </body>
+
 </html>
